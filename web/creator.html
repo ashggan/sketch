@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=0.5">
+     <link rel="stylesheet" href="style.css">
+    <title>Data Creator</title>
+</head>
+<body>
+    <div id="content">
+        <h1>Data creator</h1>
+        <div >
+            <input type="text" name="name" placeholder="your name" id="uname" value="">
+            <span id="instruction"></span>
+            <!-- <input type="button" value="submit" > -->
+            <button onclick="start()" id="startBtn"> submit</button>
+        </div>
+        <br>
+        <div id="sketchPadContainer" style="visibility: hidden;"></div>
+    </div>
+
+    <script src="../common/draw.js"></script>    
+    <script src="js/sketchPad.js"></script>
+
+    <script>
+        let index= 0
+        const labels = ['car','fish' ,'house','tree','bicycle' ,'guitar','pencil','clock']
+        const data = {
+            name:'',
+            session : new Date().getTime(),
+            drawings:{}
+        }
+        const sketchPad = new   SketchPad(sketchPadContainer)
+
+        function start(){
+            if(!uname.value) {
+                alert('Enter your name')
+                return;
+            }
+            // set the username 
+            data.name = uname.value
+            // hide the input field
+            uname.style.display='none'
+            // show the sketchPad container
+            sketchPadContainer.style.visibility ='visible'
+            const nextLabel = labels[index]  
+            instruction.innerHTML = `Please draw a sketch of ${nextLabel}`;
+            startBtn.textContent = 'Next';
+            startBtn.onclick =next
+        }
+
+        function next(){
+            // check if the drawing on the sketch 
+            if(sketchPad.paths.length === 0) {
+                alert('Draw something')
+                return
+            }
+            const label = labels[index]
+            data.drawings[label] = sketchPad.paths
+            sketchPad.reset()
+            index++
+            if(index < labels.length) {
+                const nextLabel = labels[index]  
+                instruction.innerHTML = `Please draw a sketch of ${nextLabel}`; 
+            }else{
+                sketchPadContainer.style.visibility = 'hidden'
+                instruction.innerHTML = 'thank you'
+                startBtn.textContent = 'save'
+                startBtn.onclick = save
+            }
+        }
+
+        function save(){
+            startBtn.style.display='none'
+            instruction.innerHTML ='put your downloaded file alonside the others in the dataset'
+
+            const el = document.createElement('a'); 
+            const str = JSON.stringify(data)
+            el.setAttribute('href', 
+            'data:text/plain;charset=utf-8,' + 
+            encodeURIComponent(str)); 
+
+            const fname = data.session +'.json'
+            el.setAttribute('download',fname) 
+
+            el.style.display = 'none'
+            document.body.appendChild(el)
+            el.click()
+            document.body.removeChild(el)
+        }
+    
+    </script>
+</body>
+</html>

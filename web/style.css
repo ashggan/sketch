@@ -1,0 +1,30 @@
+body{
+    background-color: rgba(76, 0, 130, 0.493);
+}
+
+#content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* bsd */
+}
+
+button {
+    background: #000;
+    padding: 5px    35px;
+    color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background: #111111;
+    transition: all 0.2s ease;
+}
+
+button:disabled , button:disabled:hover {
+    cursor: default;
+    background-color: #5a5a5a;
+
+}
