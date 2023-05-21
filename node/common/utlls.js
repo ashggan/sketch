@@ -11,4 +11,17 @@ utils.printProgress = (count, max) => {
   process.stdout.write(`${count}/${max}(${percent})`);
 };
 
-export default utils;
+utils.groupBy = (objArr, key) => {
+  let groups = {};
+  for (const obj of objArr) {
+    const val = obj[key];
+    if (!groups[val]) {
+      groups[val] = [];
+    }
+    groups[val].push(obj);
+    // console.log();
+  }
+  return groups;
+};
+
+export default utils;  
