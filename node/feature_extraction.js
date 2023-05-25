@@ -4,8 +4,8 @@ import { readFileSync, writeFileSync } from "fs";
 import utils from "./common/utlls.js";
 
 const samples = JSON.parse(readFileSync(constants.SAMPLES_JSON));
-
 let id = 0;
+
 for (const sample of samples) {
   const paths = JSON.parse(
     readFileSync(constants.JSON_DIR + "/" + sample.id + ".json")

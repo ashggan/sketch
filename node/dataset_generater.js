@@ -12,7 +12,6 @@ let id = 1;
 
 filenames.forEach((fn) => {
   const content = readFileSync(constants.RAW_DATA + "/" + fn);
-
   const { student, session, drawings } = JSON.parse(content);
   for (let label in drawings) {
     samples.push({
